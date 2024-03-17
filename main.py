@@ -8,14 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # routers: comment out next line till create them
 from routers import pdfs
+from routers import confluenceWiki
 
 import config
 
 app = FastAPI()
+# readingConfluenceApp = FastAPI()
 
 # router: comment out next line till create it
 app.include_router(pdfs.router)
-
+# readingConfluenceApp.include_router(confluenceWiki.router)
 
 #origins = [
 #    "http://localhost:3000",
@@ -30,6 +32,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# readingConfluenceApp.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 
 # global http exception handler, to handle errors
@@ -54,3 +63,17 @@ def read_root(settings: config.Settings = Depends(get_settings)):
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+# readingConfluenceApp
+
+# global http exception handler, to handle errors
+# @readingConfluenceApp.exception_handler(StarletteHTTPException)
+# async def http_exception_handler(request, exc):
+#     print(f"{repr(exc)}")
+#     return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
+
+# @readingConfluenceApp.get("/")
+# def read_root(settings: config.Settings = Depends(get_settings)):
+#     # print the app_name configuration
+#     print(settings.app_name)
+#     return "Hello Confluence World"

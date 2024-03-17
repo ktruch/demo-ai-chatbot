@@ -7,16 +7,21 @@ from database import SessionLocal
 from uuid import uuid4
 
 # Necessary imports for langchain summarization
-from langchain import OpenAI, PromptTemplate
+from langchain_community.llms import OpenAI
+from langchain import PromptTemplate
 from langchain.chains import LLMChain
 
 # Necessary imports to chat with a PDF file
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from schemas import QuestionRequest
+from dotenv import load_dotenv
+import os
+load_dotenv()
+openai_api_key = os.environ['OPENAI_API_KEY']
 llm = OpenAI()
 
 router = APIRouter(prefix="/pdfs")
