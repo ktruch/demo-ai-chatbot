@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
 from fastapi import UploadFile, HTTPException
 import requests, json
-from atlassian import Confluence
 import os
 from dotenv import load_dotenv
 import base64
+from bs4 import BeautifulSoup
+
+
 load_dotenv()
 
 BASE_URL = "https://ai-test-ktruch.atlassian.net/wiki"
@@ -31,7 +33,6 @@ def getListContent():
         # return response.json()
 
     else:
-        print(f"Error: {response.status_code} - {response.text}")
         return "Error: {response.status_code} - {response.text}"
     
 def getArticle(id: int):
@@ -42,10 +43,9 @@ def getArticle(id: int):
     if response.status_code == 200:
         article_data = response.json()
         text_content = article_data.get("body", {}).get("storage", {}).get("value", "")
-        print( article_data.get("body", {}))
+        # return BeautifulSoup(text_content).get_text()
         return text_content
 
     else:
-        print(f"Error: {response.status_code} - {response.text}")
         return "Error: {response.status_code} - {response.text}"
         

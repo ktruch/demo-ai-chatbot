@@ -6,8 +6,6 @@ from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from atlassian import Confluence
-
 # routers: comment out next line till create them
 # from routers import pdfs
 from routers import confluenceWiki
